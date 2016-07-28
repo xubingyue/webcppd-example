@@ -6,7 +6,6 @@
 #include <Poco/Net/HTTPCookie.h>
 #include <Poco/NumberFormatter.h>
 #include <Poco/Net/NameValueCollection.h>
-#include <vector>
 
 #include "help/mustache.hpp"
 
