@@ -8,6 +8,7 @@
 #include "gzip.hpp"
 #include "get.hpp"
 #include "post.hpp"
+#include "upload.hpp"
 
 #endif /* EXPORT_HPP */
 
