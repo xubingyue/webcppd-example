@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <title>列出目录</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+        <style>
+            #list-head{
+                margin: 20px auto;
+            }
+            #list-body{
+                margin: auto auto 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6" id="list-head">
+                    <hr />
+                    <a href="/staticfile/list{{parent}}">上一级</a>
+                    <a class="pull-right" href="/staticfile/list">home</a>
+                </div>  
+                <div class="col-md-3"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6 ">
+                    <div class="list-group" id="list-body">
+                        {{#list}}
+                        <a class="list-group-item" href="/staticfile/{{#isDirectory}}list{{/isDirectory}}{{#isFile}}index{{/isFile}}{{path}}">{{path}}</a>
+                        {{/list}}
+                    </div>
+                    <hr />
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+	<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    </body>
+</html>

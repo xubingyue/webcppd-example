@@ -1,4 +1,4 @@
-PRO=helloworld
+PRO=helloworld staticfile
 
 all: run
 	

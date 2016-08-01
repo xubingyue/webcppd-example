@@ -25,6 +25,7 @@ make
 # 全部演示列表
 
 * home
+* static
 * cookie
 * login
 * logout
