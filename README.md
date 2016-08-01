@@ -32,4 +32,4 @@ make
 * get
 * post
 * upload
-
+* ajax

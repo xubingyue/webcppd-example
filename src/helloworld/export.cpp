@@ -13,5 +13,6 @@ POCO_EXPORT_CLASS(webcpp::helloworld::gzipFactory)
 POCO_EXPORT_CLASS(webcpp::helloworld::getFactory)
 POCO_EXPORT_CLASS(webcpp::helloworld::postFactory)
 POCO_EXPORT_CLASS(webcpp::helloworld::uploadFactory)	
+POCO_EXPORT_CLASS(webcpp::helloworld::ajaxFactory)
 	
 POCO_END_MANIFEST
