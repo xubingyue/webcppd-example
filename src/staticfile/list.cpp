@@ -12,6 +12,7 @@
 #include <Poco/SortedDirectoryIterator.h>
 #include <fstream>
 #include <vector>
+#include <Poco/NumberFormatter.h>
 
 #include "../helloworld/help/mustache.hpp"
 
@@ -62,7 +63,11 @@ namespace webcpp {
 							tmp.set("path", tmpPath.toString());
 							tmp.set("isFile", it->isFile() ? Kainjow::Mustache::Data::Type::True : Kainjow::Mustache::Data::Type::False);
 							tmp.set("isDirectory", it->isDirectory() ? Kainjow::Mustache::Data::Type::True : Kainjow::Mustache::Data::Type::False);
+							tmp.set("lastModify", Poco::DateTimeFormatter::format(Poco::LocalDateTime(Poco::DateTime(it->getLastModified())), Poco::DateTimeFormat::SORTABLE_FORMAT));
+							if (it->isFile()) {
+								tmp.set("size", Poco::NumberFormatter::format(it->getSize()));
 
+							}
 							list.push_back(tmp);
 							++it;
 						}

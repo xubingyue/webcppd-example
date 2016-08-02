@@ -5,6 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
         <style>
+            .center-block {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+            }
             #list-head{
                 margin: 20px auto;
             }
@@ -29,15 +35,25 @@
                 <div class="col-md-6 ">
                     <div class="list-group" id="list-body">
                         {{#list}}
-                        <a class="list-group-item" href="/staticfile/{{#isDirectory}}list{{/isDirectory}}{{#isFile}}index{{/isFile}}{{path}}">{{path}}</a>
+                        <a class="list-group-item" href="/staticfile/{{#isDirectory}}list{{/isDirectory}}{{#isFile}}index{{/isFile}}{{path}}">
+                            {{path}}
+                            {{#isFile}}
+                            <span class="label label-primary">{{size}}</span>
+                            <span class="pull-right label label-default">{{lastModify}}</span>
+                            {{/isFile}}
+                            {{#isDirectory}}
+                            <span class="pull-right label label-default">{{lastModify}}</span>
+                            {{/isDirectory}}
+                        </a>
                         {{/list}}
                     </div>
                     <hr />
+                    <p class="center-block"><a  href="http://dev.webcpp.net" target="_blank">webcppd</a>&nbsp;&nbsp;服务器强力驱动</p>
                 </div>
                 <div class="col-md-3"></div>
             </div>
         </div>
-	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-	<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+        <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     </body>
 </html>
