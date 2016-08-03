@@ -3,16 +3,16 @@
 
 #include "export.hpp"
 
-POCO_BEGIN_MANIFEST(Poco::Net::HTTPRequestHandlerFactory)
+POCO_BEGIN_MANIFEST(Poco::Net::HTTPRequestHandler)
 
-POCO_EXPORT_CLASS(webcpp::helloworld::indexFactory)
-POCO_EXPORT_CLASS(webcpp::helloworld::cookieFactory)
-POCO_EXPORT_CLASS(webcpp::helloworld::loginFactory)
-POCO_EXPORT_CLASS(webcpp::helloworld::logoutFactory)	
-POCO_EXPORT_CLASS(webcpp::helloworld::gzipFactory)
-POCO_EXPORT_CLASS(webcpp::helloworld::getFactory)
-POCO_EXPORT_CLASS(webcpp::helloworld::postFactory)
-POCO_EXPORT_CLASS(webcpp::helloworld::uploadFactory)	
-POCO_EXPORT_CLASS(webcpp::helloworld::ajaxFactory)
-	
+POCO_EXPORT_CLASS(webcpp::helloworld::index)
+POCO_EXPORT_CLASS(webcpp::helloworld::cookie)
+POCO_EXPORT_CLASS(webcpp::helloworld::login)
+POCO_EXPORT_CLASS(webcpp::helloworld::logout)
+POCO_EXPORT_CLASS(webcpp::helloworld::gzip)
+POCO_EXPORT_CLASS(webcpp::helloworld::get)
+POCO_EXPORT_CLASS(webcpp::helloworld::post)
+POCO_EXPORT_CLASS(webcpp::helloworld::upload)
+POCO_EXPORT_CLASS(webcpp::helloworld::ajax)
+
 POCO_END_MANIFEST

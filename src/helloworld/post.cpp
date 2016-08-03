@@ -62,10 +62,5 @@ namespace webcpp {
 			out.close();
 		}
 
-		Poco::Net::HTTPRequestHandler* postFactory::createRequestHandler(const Poco::Net::HTTPServerRequest& request)
-		{
-			return new webcpp::helloworld::post();
-		}
-
 	}
 }

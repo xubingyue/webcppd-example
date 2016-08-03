@@ -69,10 +69,6 @@ namespace webcpp {
 			tplEngine.render(data, response.send());
 		}
 
-		Poco::Net::HTTPRequestHandler* cookieFactory::createRequestHandler(const Poco::Net::HTTPServerRequest& request)
-		{
-			return new webcpp::helloworld::cookie();
-		}
 
 
 	}

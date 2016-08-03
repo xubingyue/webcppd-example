@@ -38,10 +38,6 @@ namespace webcpp {
 			tplEngine.render(data, response.send());
 		}
 
-		Poco::Net::HTTPRequestHandler* indexFactory::createRequestHandler(const Poco::Net::HTTPServerRequest& request)
-		{
-			return new webcpp::helloworld::index();
-		}
 	}
 }
 

@@ -61,11 +61,6 @@ namespace webcpp {
 
 		}
 
-		Poco::Net::HTTPRequestHandler* uploadFactory::createRequestHandler(const Poco::Net::HTTPServerRequest& request)
-		{
-			return new webcpp::helloworld::upload();
-		}
-
 
 	}
 }

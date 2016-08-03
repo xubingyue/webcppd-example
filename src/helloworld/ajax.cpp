@@ -74,10 +74,7 @@ namespace webcpp {
 
 		}
 
-		Poco::Net::HTTPRequestHandler * ajaxFactory::createRequestHandler(const Poco::Net::HTTPServerRequest & request)
-		{
-			return new webcpp::helloworld::ajax();
-		}
+
 
 	}
 }

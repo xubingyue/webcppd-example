@@ -97,10 +97,6 @@ namespace webcpp {
 			tpl.render(data, response.send());
 		}
 
-		Poco::Net::HTTPRequestHandler* loginFactory::createRequestHandler(const Poco::Net::HTTPServerRequest& request)
-		{
-			return new webcpp::helloworld::login();
-		}
 
 
 	}

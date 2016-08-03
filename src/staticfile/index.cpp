@@ -73,12 +73,5 @@ namespace webcpp {
 
 		}
 
-		Poco::Net::HTTPRequestHandler* indexFactory::createRequestHandler(const Poco::Net::HTTPServerRequest& request)
-		{
-
-			return new webcpp::staticfile::index();
-
-
-		}
 	}
 }

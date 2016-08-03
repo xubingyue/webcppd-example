@@ -16,11 +16,6 @@ namespace webcpp {
 
 		}
 
-		Poco::Net::HTTPRequestHandler* gzipFactory::createRequestHandler(const Poco::Net::HTTPServerRequest& request)
-		{
-			return new webcpp::helloworld::gzip();
-		}
-
 
 	}
 }

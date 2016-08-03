@@ -88,11 +88,6 @@ namespace webcpp {
 
 		}
 
-		Poco::Net::HTTPRequestHandler* listFactory::createRequestHandler(const Poco::Net::HTTPServerRequest& request)
-		{
-			return new webcpp::staticfile::list();
-		}
-
 
 	}
 }

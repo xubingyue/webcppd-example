@@ -17,11 +17,6 @@ namespace webcpp {
         private:
             static std::string secret;
         };
-
-        class loginFactory : public Poco::Net::HTTPRequestHandlerFactory {
-        public:
-            Poco::Net::HTTPRequestHandler* createRequestHandler(const Poco::Net::HTTPServerRequest& request);
-        };
     }
 }
 

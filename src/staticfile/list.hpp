@@ -14,11 +14,6 @@ namespace webcpp {
         public:
             virtual void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response);
         };
-
-        class listFactory : public Poco::Net::HTTPRequestHandlerFactory {
-            Poco::Net::HTTPRequestHandler* createRequestHandler(const Poco::Net::HTTPServerRequest& request) override;
-
-        };
     }
 }
 

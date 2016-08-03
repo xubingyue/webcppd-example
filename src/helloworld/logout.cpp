@@ -63,10 +63,6 @@ namespace webcpp {
 
 		}
 
-		Poco::Net::HTTPRequestHandler* logoutFactory::createRequestHandler(const Poco::Net::HTTPServerRequest& request)
-		{
-			return new webcpp::helloworld::logout();
-		}
 
 
 	}
