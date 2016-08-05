@@ -1,5 +1,5 @@
-#ifndef POST_HPP
-#define POST_HPP
+#ifndef CAPTCHA_HPP
+#define CAPTCHA_HPP
 
 
 #include <Poco/Net/HTTPRequestHandler.h>
@@ -10,12 +10,13 @@
 namespace webcpp {
     namespace helloworld {
 
-        class post : public Poco::Net::HTTPRequestHandler {
+        class captcha : public Poco::Net::HTTPRequestHandler {
         public:
             virtual void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response);
         };
     }
 }
 
-#endif /* POST_HPP */
+
+#endif /* CAPTCHA_HPP */
 

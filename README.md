@@ -1,6 +1,13 @@
 # webcppd-example
 webcppd动态服务器插件式开发范例
 
+# 依赖(Centos)
+* epel-release：`yum -y install epel-release`
+* Poco： `yum -y install poco-devel`
+* [webcppd](https://github.com/webcpp/webcppd)
+* opencv：`yum -y install opencv-devel`
+* ubuntu 用户请自行寻找对应依赖
+
 # 使用方法
 
 * 直接
@@ -34,3 +41,4 @@ make
 * post
 * upload
 * ajax
+* captcha

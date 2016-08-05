@@ -10,6 +10,7 @@
 #include "post.hpp"
 #include "upload.hpp"
 #include "ajax.hpp"
+#include "captcha.hpp"
 
 #endif /* EXPORT_HPP */
 

@@ -14,5 +14,6 @@ POCO_EXPORT_CLASS(webcpp::helloworld::get)
 POCO_EXPORT_CLASS(webcpp::helloworld::post)
 POCO_EXPORT_CLASS(webcpp::helloworld::upload)
 POCO_EXPORT_CLASS(webcpp::helloworld::ajax)
-
+POCO_EXPORT_CLASS(webcpp::helloworld::captcha)
+	
 POCO_END_MANIFEST

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{title}}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- 新 Bootstrap 核心 CSS 文件 -->
+        <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+        <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+        <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+        <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+        <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+
+        <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+        <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <style>
+            .center-block {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div  class="container">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-3">
+                    <p>
+                        <img class="img-responsive pull-right" src="/helloworld/captcha/get" />
+                    </p>
+                </div>
+                <div class="col-md-3">
+                    <form>
+                        <div class="form-group">
+                            <label for="inputCaptcha">验证码</label>
+                            <input type="text" class="form-control" id="inputCaptcha" name="captcha">
+                        </div>
+                        <button type="submit" class="btn btn-default">验证</button>
+                        <a id="reload" class="btn btn-default">刷新</a>
+                    </form>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+        <script>
+$(document).ready(function () {
+    $('a#reload').click(function(){
+        $('img').attr("src","/helloworld/captcha/get/"+Math.random());
+    });
+    $('form button[type=submit]').click(function (e) {
+        e.preventDefault();
+        var captcha = $('form input[name=captcha]').val();
+        $.post("/helloworld/captcha/validate", {captchaCode: captcha}, function (result) {
+            if (result.ok == 1) {
+                alert("validate successful.The page will be reload after 3 seconds.");
+                setTimeout(function () {
+                    location.reload();
+                }, 2000);
+            } else {
+                alert("validate failed");
+            }
+        });
+    });
+});
+        </script>
+    </body>
+</html>
