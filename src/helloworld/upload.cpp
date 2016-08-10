@@ -7,6 +7,7 @@
 #include <Poco/NumericString.h>
 #include <Poco/NumberFormatter.h>
 #include <Poco/NumberParser.h>
+#include <Poco/String.h>
 
 
 #include "help/uploadPartHandler.hpp"
@@ -48,6 +49,7 @@ namespace webcpp {
 					tmp.set("size", Poco::NumberFormatter::format(item.size));
 					tmp.set("type", item.type);
 					tmp.set("savepath", item.savepath);
+					tmp.set("webpath","/staticfile/index/"+item.webpath);
 					tmp.set("ok", item.ok ? Poco::NumberFormatter::format(1) : Poco::NumberFormatter::format(0));
 					tmp.set("message", item.message);
 					list.push_back(tmp);

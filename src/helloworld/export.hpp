@@ -11,6 +11,7 @@
 #include "upload.hpp"
 #include "ajax.hpp"
 #include "captcha.hpp"
+#include "cropper.hpp"
 
 #endif /* EXPORT_HPP */
 

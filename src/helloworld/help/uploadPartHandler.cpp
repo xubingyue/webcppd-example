@@ -12,6 +12,8 @@
 #include <Poco/MD5Engine.h>
 #include <Poco/FileStream.h>
 #include <Poco/TemporaryFile.h>
+#include <Poco/String.h>
+
 
 #include "uploadPartHandler.hpp"
 
@@ -45,17 +47,33 @@ namespace webcpp {
 		fileinfo.ok = false;
 		fileinfo.message = "Not allow upload.";
 		fileinfo.savepath = "";
+		fileinfo.webpath = "";
 		fileinfo.size = 0;
 
 		if (typeST.has(fileinfo.type) && nameST.has(fileinfo.name)) {
 
-			Poco::TemporaryFile tempFile;
-			Poco::FileOutputStream fileoutstream(tempFile.path());
+			Poco::LocalDateTime now;
+			fileinfo.savepath = Poco::format("%[0]s/%[1]s"
+				, this->directory
+				, Poco::DateTimeFormatter::format(now, "%Y/%m/%d/%H"));
+			Poco::File uploaddir(fileinfo.savepath);
+			if (!uploaddir.exists()) {
+				uploaddir.createDirectories();
+			}
+
+			Poco::Path path(fileinfo.filename);
+			Poco::MD5Engine md5;
+			md5.update(Poco::DateTimeFormatter::format(now, Poco::DateTimeFormat::HTTP_FORMAT) + fileinfo.filename);
+			fileinfo.savepath += Poco::format("/%[0]s.%[1]s", Poco::MD5Engine::digestToHex(md5.digest()), path.getExtension());
+
+			//			Poco::TemporaryFile tempFile;
+			Poco::FileOutputStream fileoutstream(fileinfo.savepath);
 
 
 			bool allowSave = true;
 			int ch = stream.get();
 			double size(0);
+
 			while (allowSave && ch >= 0) {
 				if (size <= this->allowMaxSize) {
 					fileoutstream.put((char) ch);
@@ -69,26 +87,13 @@ namespace webcpp {
 			}
 
 			if (allowSave) {
-				Poco::LocalDateTime now;
-				fileinfo.savepath = Poco::format("%[0]s/%[1]s"
-					, this->directory
-					, Poco::DateTimeFormatter::format(now, "%Y/%m/%d/%H"));
-				Poco::File uploaddir(fileinfo.savepath);
-				if (!uploaddir.exists()) {
-					uploaddir.createDirectories();
-				}
-
-				Poco::Path path(fileinfo.filename);
-				Poco::MD5Engine md5;
-				md5.update(Poco::DateTimeFormatter::format(now, Poco::DateTimeFormat::HTTP_FORMAT) + fileinfo.filename);
-				fileinfo.savepath += Poco::format("/%[0]s.%[1]s", Poco::MD5Engine::digestToHex(md5.digest()), path.getExtension());
-
-				tempFile.copyTo(fileinfo.savepath);
-
-
+				fileinfo.webpath = Poco::replace(fileinfo.savepath, this->directory, std::string());
 				fileinfo.size = size;
 				fileinfo.ok = true;
 				fileinfo.message = "Allow upload.";
+			} else {
+				Poco::File tempFile(fileinfo.savepath);
+				tempFile.remove();
 			}
 		}
 		this->data.push_back(fileinfo);

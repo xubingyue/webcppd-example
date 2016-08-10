@@ -14,7 +14,7 @@ namespace webcpp {
     public:
 
         struct fileinfo {
-            std::string name, filename, type, savepath, message;
+            std::string name, filename, type, savepath, webpath, message;
             double size;
             bool ok;
         };

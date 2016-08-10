@@ -42,3 +42,4 @@ make
 * upload
 * ajax
 * captcha
+* cropper
