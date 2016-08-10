@@ -15,6 +15,9 @@
 
 #include <vector>
 #include <algorithm>
+#include <string>
+#include <thread>
+#include <chrono>
 
 #include "help/uploadPartHandler.hpp"
 #include "help/mustache.hpp"
@@ -38,10 +41,21 @@ namespace webcpp {
 				if (regex.match(uri.getPath())) {
 					webcpp::uploadPartHandler handler("uploadFile", "image/png|image/jpeg", app.config().getString("http.root"), app.config().getDouble("http.uploadMaxSize"));
 					Poco::Net::HTMLForm form(request, request.stream(), handler);
+					auto fun = [](const std::string & path, int expires)
+					{
+						std::this_thread::sleep_for(std::chrono::seconds(expires));
+						Poco::File tmpFile(path);
+						if (tmpFile.exists()) {
+							tmpFile.remove();
+						}
+
+					};
 					auto result = handler.getData();
 					if (result[0].ok) {
 						data.set("ok", 1);
 						data.set("path", "/staticfile/index/" + result[0].webpath);
+						std::thread th(fun, result[0].savepath, 60);
+						th.detach();
 					} else {
 						data.set("ok", 0);
 						data.set("error", result[0].message);
@@ -78,7 +92,7 @@ namespace webcpp {
 						response.send() << cropper;
 					}
 				} else {
-					response.setStatusAndReason(Poco::Net::HTTPResponse::HTTP_INTERNAL_SERVER_ERROR);
+					response.setStatusAndReason(Poco::Net::HTTPResponse::HTTP_NOT_FOUND);
 					response.send() << "source image is not exists.";
 				}
 				return;

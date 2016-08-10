@@ -43,7 +43,6 @@ namespace webcpp {
 				Poco::Net::HTTPCookie cookie;
 				cookie.setName("session_" + countStr);
 				cookie.setValue(countStr);
-				cookie.setDomain("localhost");
 				cookie.setMaxAge(3600);
 				cookie.setPath("/");
 				cookie.setHttpOnly(true);

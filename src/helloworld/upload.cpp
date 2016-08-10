@@ -9,6 +9,10 @@
 #include <Poco/NumberParser.h>
 #include <Poco/String.h>
 
+#include <string>
+#include <thread>
+#include <chrono>
+#include <vector>
 
 #include "help/uploadPartHandler.hpp"
 #include "help/mustache.hpp"
@@ -40,8 +44,18 @@ namespace webcpp {
 				webcpp::uploadPartHandler handler("uploadFile1|uploadFile2", app.config().getString("http.uploadAllowType"), app.config().getString("http.root"), app.config().getDouble("http.uploadMaxSize"));
 				Poco::Net::HTMLForm form(request, request.stream(), handler);
 				auto result = handler.getData();
-
+				auto fun = [](const std::vector<std::string>& path, int expires)
+				{
+					std::this_thread::sleep_for(std::chrono::seconds(expires));
+					for (auto &item : path) {
+						Poco::File tmpFile(item);
+						if (tmpFile.exists()) {
+							tmpFile.remove();
+						}
+					}
+				};
 				Kainjow::Mustache::Data list = Kainjow::Mustache::Data::Type::List;
+				std::vector<std::string> path;
 				for (auto & item : result) {
 					Kainjow::Mustache::Data tmp = Kainjow::Mustache::Data::Type::Object;
 					tmp.set("name", item.name);
@@ -49,11 +63,16 @@ namespace webcpp {
 					tmp.set("size", Poco::NumberFormatter::format(item.size));
 					tmp.set("type", item.type);
 					tmp.set("savepath", item.savepath);
-					tmp.set("webpath","/staticfile/index/"+item.webpath);
+					tmp.set("webpath", "/staticfile/index/" + item.webpath);
 					tmp.set("ok", item.ok ? Poco::NumberFormatter::format(1) : Poco::NumberFormatter::format(0));
 					tmp.set("message", item.message);
+
 					list.push_back(tmp);
+
+					path.push_back(item.savepath);
 				}
+				std::thread th(fun, path, 60);
+				th.detach();
 				data.set("list", list);
 			}
 			Kainjow::Mustache tplEngine(tplValue);
