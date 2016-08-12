@@ -91,8 +91,9 @@ namespace webcpp {
 						response.send() << cropper;
 
 					} else if (regexResult[1] == "blur") {
+						int kernel = Poco::NumberParser::parse(form.get("kernel", "7"));
 						webcpp::cvblur blur(path);
-						if (blur.blur()) {
+						if (blur.blur(kernel)) {
 							response.setContentType("image/png");
 							response.send() << blur;
 						} else {
@@ -101,8 +102,9 @@ namespace webcpp {
 						}
 
 					} else if (regexResult[1] == "gaussionblur") {
+						int kernel = Poco::NumberParser::parse(form.get("kernel", "7"));
 						webcpp::cvblur blur(path);
-						if (blur.gaussion()) {
+						if (blur.gaussion(kernel)) {
 							response.setContentType("image/png");
 							response.send() << blur;
 						} else {
@@ -111,8 +113,9 @@ namespace webcpp {
 						}
 
 					} else if (regexResult[1] == "medianblur") {
+						int kernel = Poco::NumberParser::parse(form.get("kernel", "7"));
 						webcpp::cvblur blur(path);
-						if (blur.median()) {
+						if (blur.median(kernel)) {
 							response.setContentType("image/png");
 							response.send() << blur;
 						} else {
@@ -121,8 +124,9 @@ namespace webcpp {
 						}
 
 					} else if (regexResult[1] == "bilateralfilter") {
+						int kernel = Poco::NumberParser::parse(form.get("kernel", "7"));
 						webcpp::cvblur blur(path);
-						if (blur.bilateralFilter()) {
+						if (blur.bilateralFilter(kernel)) {
 							response.setContentType("image/png");
 							response.send() << blur;
 						} else {

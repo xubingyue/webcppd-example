@@ -25,24 +25,6 @@
     <body>
         <div  class="container">
             <div class="row">
-                <div class="col-md-12">
-                    <form action="" method="POST" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label for="uploadFile">Image file upload</label>
-                            <input type="file" name="uploadFile" id="uploadFile">
-                        </div>
-                    </form>
-                    <button class="btn btn-default disabled" id="cut">裁剪</button>
-                    <button class="btn btn-default disabled" id="blur">均值平滑</button>
-                    <button class="btn btn-default disabled" id="GaussianBlur">高斯平滑</button>
-                    <button class="btn btn-default disabled" id="medianBlur">中值平滑</button>
-                    <button class="btn btn-default disabled" id="bilateralFilter">双边平滑</button>
-                    <hr />
-                </div>
-            </div>
-        </div>
-        <div  class="container">
-            <div class="row">
                 <div class="col-md-8"> 
                     <img id="image" src="" class="hidden img-responsive center-block">
                     <ul id="info" class="list-inline center-block">
@@ -57,6 +39,34 @@
                 </div>
             </div>
         </div>
+        <div  class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="uploadFile">Image file upload</label>
+                            <input type="file" name="uploadFile" id="uploadFile">
+                        </div>
+                    </form>
+                    <hr />
+                    <button class="btn btn-default disabled" id="cut">裁剪</button>
+                    <hr />
+                    <button class="btn btn-default disabled" id="blur">均值平滑</button>
+                    <button class="btn btn-default disabled" id="GaussianBlur">高斯平滑</button>
+                    <button class="btn btn-default disabled" id="medianBlur">中值平滑</button>
+                    <button class="btn btn-default disabled" id="bilateralFilter">双边平滑</button>
+                    <hr />
+                    <strong>滤波核</strong>
+                    <select id="blur-kernel">
+                        <option value="7">7</option>
+                        <option value="15">15</option>
+                        <option value="31">31</option>
+                    </select>
+                    <hr />
+                </div>
+            </div>
+        </div>
+
         <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
         <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
         <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
@@ -72,16 +82,16 @@ $(document).ready(function () {
         $('#sub-image').attr("src", "/helloworld/cropper/cut/?x=" + parseInt(x.text()) + "&y=" + parseInt(y.text()) + "&w=" + parseInt(w.text()) + "&h=" + parseInt(h.text()) + "&src=" + encodeURI($('#image').attr("src"))).removeClass('hidden');
     });
     $('#blur').click(function () {
-        $('#sub-image').attr("src", "/helloworld/cropper/blur/?src=" + encodeURI($('#image').attr("src"))).removeClass('hidden');
+        $('#sub-image').attr("src", "/helloworld/cropper/blur/?src=" + encodeURI($('#image').attr("src")) + "&kernel=" + $('#blur-kernel').val()).removeClass('hidden');
     });
     $('#GaussianBlur').click(function () {
-        $('#sub-image').attr("src", "/helloworld/cropper/gaussionblur/?src=" + encodeURI($('#image').attr("src"))).removeClass('hidden');
+        $('#sub-image').attr("src", "/helloworld/cropper/gaussionblur/?src=" + encodeURI($('#image').attr("src")) + "&kernel=" + $('#blur-kernel').val()).removeClass('hidden');
     });
     $('#medianBlur').click(function () {
-        $('#sub-image').attr("src", "/helloworld/cropper/medianblur/?src=" + encodeURI($('#image').attr("src"))).removeClass('hidden');
+        $('#sub-image').attr("src", "/helloworld/cropper/medianblur/?src=" + encodeURI($('#image').attr("src")) + "&kernel=" + $('#blur-kernel').val()).removeClass('hidden');
     });
     $('#bilateralFilter').click(function () {
-        $('#sub-image').attr("src", "/helloworld/cropper/bilateralfilter/?src=" + encodeURI($('#image').attr("src"))).removeClass('hidden');
+        $('#sub-image').attr("src", "/helloworld/cropper/bilateralfilter/?src=" + encodeURI($('#image').attr("src")) + "&kernel=" + $('#blur-kernel').val()).removeClass('hidden');
     });
     var image = $('#image');
     $('#uploadFile').ajaxfileupload({
