@@ -60,6 +60,7 @@ namespace webcpp {
 				webcpp::cvCaptcha cvCaptcha;
 				cvCaptcha.addEllipse();
 				cvCaptcha.addLine();
+				cvCaptcha.addSlate();
 				cvCaptcha.create();
 				Poco::MD5Engine md5;
 				md5.update(cvCaptcha.getContent());

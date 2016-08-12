@@ -6,7 +6,10 @@ namespace webcpp {
 	const std::string cvCaptcha::allChar = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	const std::array<int, 9> cvCaptcha::fontFace = {0, 1, 2, 3, 4, 5, 6, 7, 16};
 
-	cvCaptcha::cvCaptcha(bool lined, bool ellipsed) : n(6), lineNumber(10), ellipseNumber(10), content(), rng(), matrix(80, 200, CV_8UC3, cv::Scalar::all(255)), lined(lined), ellipsed(ellipsed)
+	cvCaptcha::cvCaptcha(bool lined, bool ellipsed, bool slated) :
+	n(6), lineNumber(10), ellipseNumber(10), slateNumber(300),
+	content(), rng(), matrix(80, 200, CV_8UC3, cv::Scalar::all(255)),
+	lined(lined), ellipsed(ellipsed), slated(slated)
 	{
 
 	}
@@ -49,6 +52,11 @@ namespace webcpp {
 		this->lined = true;
 	}
 
+	void cvCaptcha::addSlate()
+	{
+		this->slated = true;
+	}
+
 	void cvCaptcha::setlineNumber(int n)
 	{
 		this->lineNumber = n;
@@ -57,6 +65,11 @@ namespace webcpp {
 	void cvCaptcha::setEllipseNumber(int n)
 	{
 		this->ellipseNumber = n;
+	}
+
+	void cvCaptcha::setSlateNumber(int n)
+	{
+		this->slateNumber = n;
 	}
 
 	void cvCaptcha::create()
@@ -85,6 +98,9 @@ namespace webcpp {
 			this->drawRandomLine(this->lineNumber);
 		if (this->ellipsed)
 			this->drawRandomEllipse(this->ellipseNumber);
+		if (this->slated)
+			this->drawRandomSlate(this->slateNumber);
+
 
 	}
 
@@ -120,6 +136,23 @@ namespace webcpp {
 				this->RandomColor(),
 				1,
 				2);
+		}
+	}
+
+	void cvCaptcha::drawRandomSlate(int n)
+	{
+		int i, j;
+		for (int k = 0; k < n; ++k) {
+			i = this->rng.next(this->matrix.cols);
+			j = this->rng.next(this->matrix.rows);
+
+			if (this->matrix.channels() == 1) {
+				this->matrix.at<uchar>(j, i) = this->rng.next(255);
+			} else {
+				this->matrix.at<cv::Vec3b>(j, i)[0] = this->rng.next(255);
+				this->matrix.at<cv::Vec3b>(j, i)[1] = this->rng.next(255);
+				this->matrix.at<cv::Vec3b>(j, i)[2] = this->rng.next(255);
+			}
 		}
 	}
 
