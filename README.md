@@ -45,4 +45,4 @@ make
 * upload
 * ajax
 * captcha
-* cropper
+* cropper,blur,gaussion blur, median blur,bilateral filter

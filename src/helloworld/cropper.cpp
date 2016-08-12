@@ -157,7 +157,7 @@ namespace webcpp {
 			Poco::StreamCopier::copyToString(tplInput, tplValue);
 
 			Kainjow::Mustache::Data data = Kainjow::Mustache::Data::Type::Object;
-			data.set("title", "cropper");
+			data.set("title", "cropper,blur,gaussion blur, median blur,bilateral filter");
 			response.setChunkedTransferEncoding(true);
 			response.setContentType("text/html;charset=utf-8");
 

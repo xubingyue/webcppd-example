@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-md-8"> 
                     <img id="image" src="" class="hidden img-responsive center-block">
-                    <ul id="info" class="list-inline center-block">
+                    <ul id="info" class="list-inline center-block hidden">
                         <li><span>x=&nbsp;&nbsp;</span><span id="x">0</span></li>
                         <li><span>y=&nbsp;&nbsp;</span><span id="y">0</span></li>
                         <li><span>width=&nbsp;&nbsp;</span><span id="w">0</span></li>
@@ -97,6 +97,9 @@ $(document).ready(function () {
     $('#uploadFile').ajaxfileupload({
         action: '/helloworld/cropper/upload',
         valid_extensions: ['png', 'jpeg', 'jpg'],
+        onStart: function () {
+            $('#info').removeClass('hidden');
+        },
         onComplete: function (response) {
             if (response.ok == 1) {
                 $('#cut,#bilateralFilter,#blur,#medianBlur,#GaussianBlur').removeClass("disabled");
