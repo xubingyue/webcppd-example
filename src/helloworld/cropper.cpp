@@ -14,6 +14,7 @@
 #include <Poco/AutoPtr.h>
 
 #include <vector>
+#include <map>
 #include <algorithm>
 #include <string>
 #include <thread>
@@ -22,6 +23,7 @@
 #include "help/uploadPartHandler.hpp"
 #include "help/mustache.hpp"
 #include "help/cvcropper.hpp"
+#include "help/cvblur.hpp"
 #include "cropper.hpp"
 
 
@@ -70,26 +72,63 @@ namespace webcpp {
 				return;
 			}
 
-			Poco::RegularExpression regex("^/helloworld/cropper/cut/?");
-
-			if (regex.match(uri.getPath()) && request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET) {
+			Poco::RegularExpression regex("^/helloworld/cropper/(cut|blur|gaussionblur|medianblur|bilateralfilter)/?$");
+			std::vector<std::string> regexResult;
+			if (regex.split(uri.getPath(), 0, regexResult) == 2 && request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET) {
 
 				Poco::Net::HTMLForm form(request);
 				std::string path = app.config().getString("http.root") + Poco::replace(form.get("src"), std::string("/staticfile/index"), std::string());
 
-				int x = Poco::NumberParser::parse(form.get("x"))
-					, y = Poco::NumberParser::parse(form.get("y"))
-					, w = Poco::NumberParser::parse(form.get("w"))
-					, h = Poco::NumberParser::parse(form.get("h"));
-
 				if (Poco::File(path).exists()) {
-					webcpp::cvcropper cropper(path);
-					if (cropper.create(x, y, w, h)) {
+					if (regexResult[1] == "cut") {
+						int x = Poco::NumberParser::parse(form.get("x"))
+							, y = Poco::NumberParser::parse(form.get("y"))
+							, w = Poco::NumberParser::parse(form.get("w"))
+							, h = Poco::NumberParser::parse(form.get("h"));
+						webcpp::cvcropper cropper(path);
+						cropper.create(x, y, w, h);
 						response.setContentType("image/png");
 						response.send() << cropper;
-					} else {
-						response.setContentType("image/png");
-						response.send() << cropper;
+
+					} else if (regexResult[1] == "blur") {
+						webcpp::cvblur blur(path);
+						if (blur.blur()) {
+							response.setContentType("image/png");
+							response.send() << blur;
+						} else {
+							response.setStatusAndReason(Poco::Net::HTTPResponse::HTTP_INTERNAL_SERVER_ERROR);
+							response.send() << "source image blur failed.";
+						}
+
+					} else if (regexResult[1] == "gaussionblur") {
+						webcpp::cvblur blur(path);
+						if (blur.gaussion()) {
+							response.setContentType("image/png");
+							response.send() << blur;
+						} else {
+							response.setStatusAndReason(Poco::Net::HTTPResponse::HTTP_INTERNAL_SERVER_ERROR);
+							response.send() << "source image  GaussionBlur failed.";
+						}
+
+					} else if (regexResult[1] == "medianblur") {
+						webcpp::cvblur blur(path);
+						if (blur.median()) {
+							response.setContentType("image/png");
+							response.send() << blur;
+						} else {
+							response.setStatusAndReason(Poco::Net::HTTPResponse::HTTP_INTERNAL_SERVER_ERROR);
+							response.send() << "source image medianBlur failed.";
+						}
+
+					} else if (regexResult[1] == "bilateralfilter") {
+						webcpp::cvblur blur(path);
+						if (blur.bilateralFilter()) {
+							response.setContentType("image/png");
+							response.send() << blur;
+						} else {
+							response.setStatusAndReason(Poco::Net::HTTPResponse::HTTP_INTERNAL_SERVER_ERROR);
+							response.send() << "source image bilateralFilter failed.";
+						}
 					}
 				} else {
 					response.setStatusAndReason(Poco::Net::HTTPResponse::HTTP_NOT_FOUND);
@@ -97,6 +136,8 @@ namespace webcpp {
 				}
 				return;
 			}
+
+
 
 			Poco::Path tplPath(app.config().getString("http.tplDirectory", "/var/www/tpl"));
 			tplPath.append("/example/cropper.html");

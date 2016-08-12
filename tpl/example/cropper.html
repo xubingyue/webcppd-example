@@ -32,7 +32,11 @@
                             <input type="file" name="uploadFile" id="uploadFile">
                         </div>
                     </form>
-                    <button class="btn btn-default disabled" id="cut">Cut</button>
+                    <button class="btn btn-default disabled" id="cut">裁剪</button>
+                    <button class="btn btn-default disabled" id="blur">均值平滑</button>
+                    <button class="btn btn-default disabled" id="GaussianBlur">高斯平滑</button>
+                    <button class="btn btn-default disabled" id="medianBlur">中值平滑</button>
+                    <button class="btn btn-default disabled" id="bilateralFilter">双边平滑</button>
                     <hr />
                 </div>
             </div>
@@ -67,13 +71,25 @@ $(document).ready(function () {
     $('#cut').click(function () {
         $('#sub-image').attr("src", "/helloworld/cropper/cut/?x=" + parseInt(x.text()) + "&y=" + parseInt(y.text()) + "&w=" + parseInt(w.text()) + "&h=" + parseInt(h.text()) + "&src=" + encodeURI($('#image').attr("src"))).removeClass('hidden');
     });
+    $('#blur').click(function () {
+        $('#sub-image').attr("src", "/helloworld/cropper/blur/?src=" + encodeURI($('#image').attr("src"))).removeClass('hidden');
+    });
+    $('#GaussianBlur').click(function () {
+        $('#sub-image').attr("src", "/helloworld/cropper/gaussionblur/?src=" + encodeURI($('#image').attr("src"))).removeClass('hidden');
+    });
+    $('#medianBlur').click(function () {
+        $('#sub-image').attr("src", "/helloworld/cropper/medianblur/?src=" + encodeURI($('#image').attr("src"))).removeClass('hidden');
+    });
+    $('#bilateralFilter').click(function () {
+        $('#sub-image').attr("src", "/helloworld/cropper/bilateralfilter/?src=" + encodeURI($('#image').attr("src"))).removeClass('hidden');
+    });
     var image = $('#image');
     $('#uploadFile').ajaxfileupload({
         action: '/helloworld/cropper/upload',
         valid_extensions: ['png', 'jpeg', 'jpg'],
         onComplete: function (response) {
             if (response.ok == 1) {
-                $('#cut').removeClass("disabled");
+                $('#cut,#bilateralFilter,#blur,#medianBlur,#GaussianBlur').removeClass("disabled");
                 image.cropper({
                     aspectRatio: NaN,
                     viewMode: 3,
@@ -85,7 +101,7 @@ $(document).ready(function () {
                     }
                 }).cropper('reset', true).cropper('replace', response.path).removeClass('hidden');
             } else {
-                $('#cut').addClass("disabled");
+                $('#cut,#bilateralFilter,#blur,#medianBlur,#GaussianBlur').addClass("disabled");
                 alert(response.error);
             }
         }
