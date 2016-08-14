@@ -20,13 +20,19 @@
                 margin-right: auto;
                 text-align: center;
             }
+            .image{
+                max-height: 300px;
+                max-width: 100px;
+                height: 300px;
+                width: 100px;
+            }
         </style>
     </head>
     <body>
         <div  class="container">
             <div class="row">
                 <div class="col-md-8"> 
-                    <img id="image" src="" class="hidden img-responsive center-block">
+                    <img id="image" src="" class="hidden img-responsive image">
                     <ul id="info" class="list-inline center-block hidden">
                         <li><span>x=&nbsp;&nbsp;</span><span id="x">0</span></li>
                         <li><span>y=&nbsp;&nbsp;</span><span id="y">0</span></li>
@@ -63,6 +69,23 @@
                         <option value="31">31</option>
                     </select>
                     <hr />
+                    <button class="btn btn-default disabled" id="rotate">旋转</button>
+                    <hr/>
+                    <strong>角度</strong>
+                    <select id="rotate-degrees">
+                        <option value="30">30</option>
+                        <option value="60">60</option>
+                        <option value="90">90</option>
+                        <option value="120">120</option>
+                        <option value="150">150</option>
+                        <option value="180">180</option>
+                        <option value="210">210</option>
+                        <option value="240">240</option>
+                        <option value="270">270</option>
+                        <option value="300">300</option>
+                        <option value="330">330</option>
+                    </select>
+                    <hr />
                 </div>
             </div>
         </div>
@@ -78,6 +101,7 @@
         <script>
 $(document).ready(function () {
     var x = $('#x'), y = $('#y'), w = $('#w'), h = $('#h');
+
     $('#cut').click(function () {
         $('#sub-image').attr("src", "/helloworld/cropper/cut/?x=" + parseInt(x.text()) + "&y=" + parseInt(y.text()) + "&w=" + parseInt(w.text()) + "&h=" + parseInt(h.text()) + "&src=" + encodeURI($('#image').attr("src"))).removeClass('hidden');
     });
@@ -93,6 +117,9 @@ $(document).ready(function () {
     $('#bilateralFilter').click(function () {
         $('#sub-image').attr("src", "/helloworld/cropper/bilateralfilter/?src=" + encodeURI($('#image').attr("src")) + "&kernel=" + $('#blur-kernel').val()).removeClass('hidden');
     });
+    $('#rotate').click(function () {
+        $('#sub-image').attr("src", "/helloworld/cropper/rotate/?src=" + encodeURI($('#image').attr("src")) + "&degrees=" + $('#rotate-degrees').val()).removeClass('hidden');
+    });
     var image = $('#image');
     $('#uploadFile').ajaxfileupload({
         action: '/helloworld/cropper/upload',
@@ -102,7 +129,7 @@ $(document).ready(function () {
         },
         onComplete: function (response) {
             if (response.ok == 1) {
-                $('#cut,#bilateralFilter,#blur,#medianBlur,#GaussianBlur').removeClass("disabled");
+                $('#cut,#bilateralFilter,#blur,#medianBlur,#GaussianBlur,#rotate').removeClass("disabled");
                 image.cropper({
                     aspectRatio: NaN,
                     viewMode: 3,

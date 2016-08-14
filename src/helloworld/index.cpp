@@ -27,8 +27,8 @@ namespace webcpp {
 			Poco::StreamCopier::copyToString(tplInput, tplValue);
 
 			Kainjow::Mustache::Data data = Kainjow::Mustache::Data::Type::Object;
-			data.set("content", "hello world!");
-			data.set("title", "hello world");
+			data.set("title", "webcppd 插件式 web 开发演示项目列表");
+			data.set("content", "webcppd 插件式 web 开发演示项目列表");
 
 
 			response.setChunkedTransferEncoding(true);

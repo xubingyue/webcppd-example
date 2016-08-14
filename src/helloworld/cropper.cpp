@@ -24,6 +24,8 @@
 #include "help/mustache.hpp"
 #include "help/cvcropper.hpp"
 #include "help/cvblur.hpp"
+#include "help/cvrotate.hpp"
+
 #include "cropper.hpp"
 
 
@@ -72,7 +74,7 @@ namespace webcpp {
 				return;
 			}
 
-			Poco::RegularExpression regex("^/helloworld/cropper/(cut|blur|gaussionblur|medianblur|bilateralfilter)/?$");
+			Poco::RegularExpression regex("^/helloworld/cropper/(cut|blur|gaussionblur|medianblur|bilateralfilter|rotate)/?$");
 			std::vector<std::string> regexResult;
 			if (regex.split(uri.getPath(), 0, regexResult) == 2 && request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET) {
 
@@ -133,6 +135,16 @@ namespace webcpp {
 							response.setStatusAndReason(Poco::Net::HTTPResponse::HTTP_INTERNAL_SERVER_ERROR);
 							response.send() << "source image bilateralFilter failed.";
 						}
+					} else if (regexResult[1] == "rotate") {
+						int degrees = Poco::NumberParser::parse(form.get("degrees", "30"));
+						webcpp::cvrotate rotate(path, degrees);
+						if (rotate.isReady()) {
+							response.setContentType("image/png");
+							response.send() << rotate;
+						} else {
+							response.setStatusAndReason(Poco::Net::HTTPResponse::HTTP_INTERNAL_SERVER_ERROR);
+							response.send() << "source image bilateralFilter failed.";
+						}
 					}
 				} else {
 					response.setStatusAndReason(Poco::Net::HTTPResponse::HTTP_NOT_FOUND);
@@ -157,7 +169,7 @@ namespace webcpp {
 			Poco::StreamCopier::copyToString(tplInput, tplValue);
 
 			Kainjow::Mustache::Data data = Kainjow::Mustache::Data::Type::Object;
-			data.set("title", "cropper,blur,gaussion blur, median blur,bilateral filter");
+			data.set("title", "图片裁剪、滤镜和旋转");
 			response.setChunkedTransferEncoding(true);
 			response.setContentType("text/html;charset=utf-8");
 
