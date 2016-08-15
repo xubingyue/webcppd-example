@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{title}}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- 新 Bootstrap 核心 CSS 文件 -->
+        <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+        <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+        <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+        <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+        <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+
+        <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+        <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <span>中文：&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <input name="chinese" value=""/>
+                    <button id="chinese" class="btn btn-default btn-primary">验证</button>
+                    <hr />
+                    <span>邮箱：&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <input name="email" value=""/>
+                    <button id="email" class="btn btn-default btn-primary">验证</button>
+                    <hr />
+                    <span>手机：&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <input name="mobile" value=""/>
+                    <button id="mobile" class="btn btn-default btn-primary">验证</button>
+                    <hr />
+                    <span>身份证：&nbsp;</span>
+                    <input name="idcard" value=""/>
+                    <button id="idcard" class="btn btn-default btn-primary">验证</button>
+                    <hr />
+                </div>
+            </div>
+        </div>
+        <script>
+$(document).ready(function () {
+    $('button').each(function (index, item) {
+        $(item).click(function () {
+            var pattern = this.id;
+            var val = $('input[name=' + pattern + ']').val();
+
+            $.post('/helloworld/validate', {text: val, pattern: pattern}, function (result) {
+                if (result.ok == 1) {
+                    alert('validate sucessful');
+                } else {
+                    alert('validate fail');
+                }
+            });
+        });
+    });
+});
+        </script>
+    </body>
+</html>

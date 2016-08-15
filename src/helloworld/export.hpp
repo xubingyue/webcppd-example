@@ -12,6 +12,7 @@
 #include "ajax.hpp"
 #include "captcha.hpp"
 #include "cropper.hpp"
+#include "validate.hpp"
 
 #endif /* EXPORT_HPP */
 

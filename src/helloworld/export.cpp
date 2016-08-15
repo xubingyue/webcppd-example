@@ -16,5 +16,7 @@ POCO_EXPORT_CLASS(webcpp::helloworld::upload)
 POCO_EXPORT_CLASS(webcpp::helloworld::ajax)
 POCO_EXPORT_CLASS(webcpp::helloworld::captcha)
 POCO_EXPORT_CLASS(webcpp::helloworld::cropper)
+POCO_EXPORT_CLASS(webcpp::helloworld::validate)
+	
 	
 POCO_END_MANIFEST
