@@ -33,6 +33,8 @@ namespace webcpp {
 					}
 				}
 			}
+			QRcode_free(qr);
+			
 			CvSize dstSize;
 			dstSize.width = this->width, dstSize.height = this->height;
 			IplImage srcp = src;
@@ -48,8 +50,7 @@ namespace webcpp {
 			right = (int) (border * src.cols);
 			cv::Scalar borderColor = cv::Scalar::all(255);
 			this->image = tmpMat;
-			cv::copyMakeBorder(tmpMat, this->image, top, bottom, left, right, cv::BORDER_ISOLATED, borderColor);
-			QRcode_free(qr);
+			cv::copyMakeBorder(tmpMat, this->image, top, bottom, left, right, cv::BORDER_ISOLATED, borderColor);			
 			this->successful = true;
 		}
 	}
