@@ -47,3 +47,4 @@ make
 * ajax
 * captcha
 * cropper,blur,gaussion blur, median blur,bilateral filter
+* qrencode
