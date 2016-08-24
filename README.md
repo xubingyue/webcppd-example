@@ -6,6 +6,7 @@ webcppd动态服务器插件式开发范例
 * Poco： `yum -y install poco-devel`
 * [webcppd](https://github.com/webcpp/webcppd)
 * opencv：`yum -y install opencv-devel`
+* qrencode: `yum -y install qrencode-devel`
 * ubuntu 用户请自行寻找对应依赖
 
 # 使用方法

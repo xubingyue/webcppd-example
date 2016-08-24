@@ -13,6 +13,7 @@
 #include "captcha.hpp"
 #include "cropper.hpp"
 #include "validate.hpp"
+#include "qrencode.hpp"
 
 #endif /* EXPORT_HPP */
 
