@@ -31,19 +31,19 @@ namespace webcpp {
 							response.send() << qrcode;
 							return;
 						} else {
-							response.setStatus(Poco::Net::HTTPResponse::HTTP_REASON_INTERNAL_SERVER_ERROR);
+							response.setStatus(Poco::Net::HTTPResponse::HTTP_BAD_REQUEST);
 							response.setContentType("text/plain");
 							response.send() << "create image failed";
 							return;
 						}
 					} else {
-						response.setStatus(Poco::Net::HTTPResponse::HTTP_REASON_INTERNAL_SERVER_ERROR);
+						response.setStatus(Poco::Net::HTTPResponse::HTTP_BAD_REQUEST);
 						response.setContentType("text/plain");
 						response.send() << "create text is too bigger ";
 						return;
 					}
 				} else {
-					response.setStatus(Poco::Net::HTTPResponse::HTTP_REASON_INTERNAL_SERVER_ERROR);
+					response.setStatus(Poco::Net::HTTPResponse::HTTP_BAD_REQUEST);
 					response.setContentType("text/plain");
 					response.send() << "request method failed";
 					return;
